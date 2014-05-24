@@ -15,19 +15,27 @@ module Middleman
       def update_build_info(builder)
         @builder  = builder
         @backup   = read_info_file
-        new_info  = get_updated_info(@backup)
-        write_info_file(new_info)
+        @new_info  = get_updated_info(@backup)
+        write_info_file(@new_info) do
+          @builder.say_status('update', @file_relative, :yellow)
+        end
       end
 
-      def validate_procedure
-        write_info_file(@backup) if @builder.had_errors
+      def wrap_up
+        return print_build_info(@new_info) unless @builder.had_errors
+        write_info_file(@backup) do
+          @builder.say_status('rollback', @file_relative, :yellow)
+        end
       end
 
       private
 
-      def write_info_file info
+      def write_info_file(info, &block)
         json = "// Hands off!\n" + JSON.pretty_generate(info)
         File.open(@file, "w") { |f| f.write(json) }
+        yield block
+      rescue
+        @builder.say_status('failed', @file_relative, :red)
       end
 
       def read_info_file
@@ -36,8 +44,7 @@ module Middleman
         default_template
       end
 
-      def get_updated_info info
-        puts info
+      def get_updated_info(info)
         info["number"] = info["number"].to_i + 1
         info["date"]   = Time.now.utc.to_s
         info
@@ -45,6 +52,13 @@ module Middleman
 
       def default_template
         { number: 0, date: '' }
+      end
+
+      def print_build_info(info)
+        @builder.say("\n   Build Info:")
+        info.each_pair do |name, value|
+          @builder.say_status(name, value, :green)
+        end
       end
 
     end

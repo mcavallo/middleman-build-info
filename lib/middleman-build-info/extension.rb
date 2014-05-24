@@ -20,7 +20,7 @@ module Middleman
     end
 
     def after_build
-      @updater.validate_procedure
+      @updater.wrap_up
     end
 
   end
