@@ -1,6 +1,6 @@
 # Middleman Build Info
 
-`middleman-blog` is an extension for the [Middleman] static site generator that mantains an incremental build number and date on a JSON file inside your project.
+`middleman-build-info` is an extension for the [Middleman] static site generator that mantains an incremental build number and date on a JSON file inside your project.
 
 Once the extension is activated It will run and update the build file every time you build your project.
 
