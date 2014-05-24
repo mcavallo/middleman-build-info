@@ -6,7 +6,7 @@ Once the extension is activated It will run and update the build file every time
 
 ![IMAGE]
 
-[![Code Climate](https://codeclimate.com/github/mcavallo/middleman-build-info.png)](https://codeclimate.com/github/mcavallo/middleman-build-info)
+[![Gem Version](https://badge.fury.io/rb/middleman-build-info.png)](http://badge.fury.io/rb/middleman-build-info) [![Code Climate](https://codeclimate.com/github/mcavallo/middleman-build-info.png)](https://codeclimate.com/github/mcavallo/middleman-build-info)
 
 ## Dependencies
 
