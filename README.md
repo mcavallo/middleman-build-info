@@ -16,7 +16,7 @@ Once the extension is activated It will run and update the build file every time
 Add to your `Gemfile` and then run `bundle install`:
 
 ```ruby
-gem 'middleman-build-info', '~> 0.0.1'
+gem 'middleman-build-info'
 ```
 
 Then activate the extension in your `config.rb` file:
