@@ -6,6 +6,8 @@ Once the extension is activated It will run and update the build file every time
 
 ![IMAGE]
 
+[![Code Climate](https://codeclimate.com/github/mcavallo/middleman-build-info.png)](https://codeclimate.com/github/mcavallo/middleman-build-info)
+
 ## Dependencies
 
 * middleman-core (3.3+)
