@@ -16,11 +16,18 @@ module Middleman
     end
 
     def before_build(builder)
-      @updater.update_build_info(builder)      
+      @updater.update_build_info(builder)
     end
 
     def after_build
       @updater.wrap_up
+    end
+
+    helpers do
+      def build_info(key=nil)
+        return config[:build_info] if key.nil?
+        config[:build_info][key.to_sym] || nil
+      end
     end
 
   end
