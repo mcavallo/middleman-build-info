@@ -41,14 +41,14 @@ module Middleman
       end
 
       def read_info_file
-        JSON.parse(File.read(@file))
+        JSON.parse(File.read(@file)).symbolize_keys
       rescue Errno::ENOENT, JSON::ParserError
         default_template
       end
 
       def get_updated_info(info)
-        info["number"] = info["number"].to_i + 1
-        info["date"]   = Time.now.utc.to_s
+        info[:number] = info[:number].to_i + 1
+        info[:date]   = Time.now.utc.to_s
         info
       end
 
@@ -59,7 +59,7 @@ module Middleman
       def print_build_info(info)
         @builder.say("\n   Build Info:")
         info.each_pair do |name, value|
-          @builder.say_status(name, value, :green)
+          @builder.say_status(name.to_s, value, :green)
         end
       end
 
