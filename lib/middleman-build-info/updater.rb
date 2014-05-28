@@ -10,11 +10,13 @@ module Middleman
         @options        = options
         @file           = File.join(@app.root_path, @options[:relative_path], @options[:filename])
         @file_relative  = File.join(@options[:relative_path], @options[:filename]).without_leading_slash
+
+        @backup = read_info_file
+        app.set :build_info, @backup
       end
 
       def update_build_info(builder)
         @builder  = builder
-        @backup   = read_info_file
         @new_info  = get_updated_info(@backup)
         write_info_file(@new_info) do
           @builder.say_status('update', @file_relative, :yellow)
