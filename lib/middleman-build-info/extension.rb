@@ -4,7 +4,7 @@ module Middleman
   class BuildInfoExtension < Extension
 
     option :filename, 'build.json', 'Build filename.'
-    option :relative_path, 'source', 'Relative path to build file from MM root.'
+    option :relative_path, '', 'Relative path to build file from MM root.'
     option :display_info_after_build, true, 'Print build info after a successful build.'
 
     def initialize(app, options_hash={}, &block)
