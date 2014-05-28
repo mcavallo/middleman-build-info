@@ -57,6 +57,7 @@ module Middleman
       end
 
       def print_build_info(info)
+        return unless @options[:display_info_after_build]
         @builder.say("\n   Build Info:")
         info.each_pair do |name, value|
           @builder.say_status(name.to_s, value, :green)
