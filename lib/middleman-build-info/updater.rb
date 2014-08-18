@@ -6,6 +6,7 @@ module Middleman
     class Updater
 
       def initialize(app, options)
+        @start_time     = Time.now
         @app            = app
         @options        = options
         @file           = File.join(@app.root_path, @options[:relative_path], @options[:filename])
@@ -56,12 +57,24 @@ module Middleman
         { number: 0, date: '' }
       end
 
+      def elapsed_time
+        diff = ((Time.now - @start_time) * 1000).ceil
+        ss, ms = diff.divmod(1000)
+        mm, ss = ss.divmod(60)
+        time = []
+        time << "minute".pluralized_count(mm) unless mm.zero?
+        time << "second".pluralized_count(ss) unless ss.zero?
+        time << "millisecond".pluralized_count(ms) if time.empty? or not ms.zero?
+        time.join(', ')
+      end
+
       def print_build_info(info)
         return unless @options[:display_info_after_build]
         @builder.say("\n   Build Info:")
         info.each_pair do |name, value|
           @builder.say_status(name.to_s, value, :green)
         end
+        @builder.say("\n   Finished in #{elapsed_time}.")
       end
 
     end

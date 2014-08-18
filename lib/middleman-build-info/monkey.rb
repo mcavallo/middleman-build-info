@@ -1,10 +1,23 @@
 class String
+
   def without_leading_slash
     self.gsub(/^\//,'')
   end
+
+  def pluralized_count count, plural=nil
+    if count == 1
+      "1 #{self}"
+    elsif plural
+      "#{count} #{plural}"
+    else
+      "#{count} #{self}s"
+    end
+  end
+
 end
 
 class Hash
+
   def symbolize_keys
     self.inject({}) do |result, (key, value)|
       new_key = case key
@@ -19,4 +32,5 @@ class Hash
       result
     end
   end
+
 end
