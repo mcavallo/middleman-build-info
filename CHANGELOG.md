@@ -1,5 +1,10 @@
 # Changelog
 
+0.0.3
+=====
+* Fixed [#1](https://github.com/mcavallo/middleman-build-info/issues/1)
+* Added elapsed time display.
+
 0.0.2
 =====
 * Fixed `relative_path` setting default to point to MM root.
