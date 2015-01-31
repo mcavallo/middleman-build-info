@@ -1,16 +1,19 @@
-require 'middleman-build-info/monkey'
+require 'active_support/core_ext/hash/keys'
+require 'active_support/core_ext/string/inflections'
 require 'json'
 
 module Middleman
   module BuildInfo
     class Updater
 
+      include Padrino::Helpers::FormatHelpers
+
       def initialize(app, options)
         @start_time     = Time.now
         @app            = app
         @options        = options
         @file           = File.join(@app.root_path, @options[:relative_path], @options[:filename])
-        @file_relative  = File.join(@options[:relative_path], @options[:filename]).without_leading_slash
+        @file_relative  = File.join(@options[:relative_path], @options[:filename]).gsub(/^\//,'')
 
         @backup = read_info_file
         app.set :build_info, @backup
@@ -62,9 +65,9 @@ module Middleman
         ss, ms = diff.divmod(1000)
         mm, ss = ss.divmod(60)
         time = []
-        time << "minute".pluralized_count(mm) unless mm.zero?
-        time << "second".pluralized_count(ss) unless ss.zero?
-        time << "millisecond".pluralized_count(ms) if time.empty? or not ms.zero?
+        time << pluralize(mm, "minute") unless mm.zero?
+        time << pluralize(ss, "second") unless ss.zero?
+        time << pluralize(ms, "millisecond") if time.empty? or not ms.zero?
         time.join(', ')
       end
 
@@ -74,7 +77,7 @@ module Middleman
         info.each_pair do |name, value|
           @builder.say_status(name.to_s, value, :green)
         end
-        @builder.say("\n   Finished in #{elapsed_time}.")
+        @builder.say("\n   Build finished in #{elapsed_time}.")
       end
 
     end
